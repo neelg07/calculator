@@ -1,2 +1,2 @@
 # calculator
-Calculator Project as per TOP curriculum
+Project: Calculator (TOP)
