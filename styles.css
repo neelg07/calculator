@@ -3,17 +3,36 @@
     max-height: 100%;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.outer {
+    border: 1px solid black;
+    margin-top: 75px;
+    margin-bottom: 75px;
+    border-radius: 5px;
+    background-color: #7D9EC0;
+}
+
+.footer {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .container {
     display: flex;
     flex-flow: column;
+    margin: 50px;
+    margin-bottom: 25px;
+    row-gap: 25px;
 }
 
 .display {
     border: 1px solid black;
     text-align: end;
+    height: 70px;
     padding: 5px;
+    background-color: #FEF0C9;
 }
 
 /* buttons div class */
@@ -21,19 +40,26 @@
 .buttons {
     display: flex;
     flex-flow: row;
+    gap: 5px;
 }
 
 /* Buttons type */
 
 button {
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
+    font-size: large;
+}
+
+.decimal {
+    font-size: x-large;
 }
 
 .left {
     display: flex;
     flex-flow: column;
     flex: 1 1 100%;
+    gap: 5px;
 }
 
 .row-1,
@@ -43,10 +69,28 @@ button {
 .row-5 {
     display: flex;
     flex-flow: row;
+    gap: 5px;
 }
 
 .right {
     display: flex;
     flex-flow: column;
     flex: 1 1 100%;
+    gap: 5px;
+}
+
+.right button {
+    background-color: orange;
+}
+
+.left button {
+    background-color: lightyellow;
+}
+
+.row-1 button {
+    background-color: lightblue;
+}
+
+.left .equal {
+    background-color: orange;
 }
