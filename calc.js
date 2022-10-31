@@ -37,7 +37,7 @@ function operate(op, x, y) {
 const display = document.querySelector('.display');
 const digits = document.querySelectorAll('.number'); 
 
-digits.forEach((number) => {
+digits.forEach((number) => {                                // Number buttons
 
     number.addEventListener('click', () => {
 
@@ -46,9 +46,19 @@ digits.forEach((number) => {
 });
 
 
-const clear = document.querySelector('.clear');
+const clear = document.querySelector('.clear');            // Clear button
 
 clear.addEventListener('click', () => {
 
     display.textContent = '';
 });
+
+
+const del = document.querySelector('.delete');           // Delete button 
+
+del.addEventListener('click', () => {
+
+    display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+});
+
+
