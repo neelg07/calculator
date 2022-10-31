@@ -31,3 +31,24 @@ function operate(op, x, y) {
         return divide(x, y)
     }
 };
+
+// Populating Display w/ EventListeners
+
+const display = document.querySelector('.display');
+const digits = document.querySelectorAll('.number'); 
+
+digits.forEach((number) => {
+
+    number.addEventListener('click', () => {
+
+        display.textContent += number.textContent;
+    })
+});
+
+
+const clear = document.querySelector('.clear');
+
+clear.addEventListener('click', () => {
+
+    display.textContent = '';
+});
