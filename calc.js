@@ -128,3 +128,26 @@ power.addEventListener('click', () => {
     display.textContent += ' ^ ';
     checkOper = true;
 });
+
+
+
+const decimal = document.querySelector('.decimal');         // Decimal button
+
+decimal.addEventListener('click', () => {
+
+    display.textContent += '.';
+    decimal.disabled = true;
+});
+
+
+
+const sign = document.querySelector('.sign');           // Change sign button
+
+sign.addEventListener('click', () => {
+
+    if (display.textContent[0] === '-') {
+        display.textContent = display.textContent.substring(1);
+    } else {
+        display.textContent = '-' + display.textContent;
+    }
+});
