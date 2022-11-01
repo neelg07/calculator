@@ -41,6 +41,14 @@ function checkDisplay() {
 let checkOper = false;
 
 
+// Operation class object
+
+let equation = {
+    first: undefined,
+    operation: undefined,
+    second: undefined,
+};
+
 
 const display = document.querySelector('.display');
 const digits = document.querySelectorAll('.number'); 
@@ -84,6 +92,8 @@ del.addEventListener('click', () => {
 const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
+
+    equation.first = parseFloat(display.textContent);
 
     display.textContent += ' + ';
     checkOper = true;
