@@ -58,7 +58,17 @@ const del = document.querySelector('.delete');           // Delete button
 
 del.addEventListener('click', () => {
 
+    if (display.textContent[display.textContent.length - 1] === ' ') {                                 // If operater (' + ') delete until next non-space char
+        
+        display.textContent = display.textContent.substring(0, display.textContent.length - 3);
+    }
     display.textContent = display.textContent.substring(0, display.textContent.length - 1);
 });
 
 
+const plus = document.querySelector('.add');
+
+plus.addEventListener('click', () => {                  // Plus sign button
+
+    display.textContent += ' + ';
+});
