@@ -34,6 +34,14 @@ function operate(op, x, y) {
 
 // Populating Display w/ EventListeners
 
+function checkDisplay() {
+    return display.textContent.length >= 17;
+}
+
+let checkOper = false;
+
+
+
 const display = document.querySelector('.display');
 const digits = document.querySelectorAll('.number'); 
 
@@ -41,9 +49,14 @@ digits.forEach((number) => {                                // Number buttons
 
     number.addEventListener('click', () => {
 
+        if (checkOper === true) {
+            display.textContent = '';
+            checkOper = false;
+        }
         display.textContent += number.textContent;
     })
 });
+
 
 
 const clear = document.querySelector('.clear');            // Clear button
@@ -52,6 +65,7 @@ clear.addEventListener('click', () => {
 
     display.textContent = '';
 });
+
 
 
 const del = document.querySelector('.delete');           // Delete button 
@@ -66,9 +80,51 @@ del.addEventListener('click', () => {
 });
 
 
+
 const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
     display.textContent += ' + ';
+    checkOper = true;
+});
+
+
+
+const minus = document.querySelector('.subtract');      // Minus sign button
+
+minus.addEventListener('click', () => {
+
+    display.textContent += ' - ';
+    checkOper = true;
+});
+
+
+
+const times = document.querySelector('.multiply');      // Multiply button
+
+times.addEventListener('click', () => {
+
+    display.textContent += ' * ';
+    checkOper = true;
+});
+
+
+
+const division = document.querySelector('.divide');       // Division button
+
+division.addEventListener('click', () => {
+
+    display.textContent += ' / ';
+    checkOper = true;
+});
+
+
+
+const power = document.querySelector('.exponent');          // Exponent button
+
+power.addEventListener('click', () => {
+
+    display.textContent += ' ^ ';
+    checkOper = true;
 });

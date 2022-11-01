@@ -30,9 +30,11 @@
 .display {
     border: 2px solid black;
     text-align: end;
+    line-height: 70px;
     height: 70px;
     padding: 5px;
     background-color: #FEF0C9;
+    font-size: 35px;
 }
 
 /* buttons div class */
