@@ -57,11 +57,23 @@ digits.forEach((number) => {                                // Number buttons
 
     number.addEventListener('click', () => {
 
-        if (checkOper === true) {
-            display.textContent = '';
-            checkOper = false;
+        if (display.textContent.length >= 19) {
+            alert('Too many numbers');
+        } else {
+
+            if (checkOper) {
+                display.textContent = number.textContent;
+                plus.removeAttribute('style');
+                checkOper = false;
+                equation.second = parseFloat(display.textContent);
+            } else if (equation.first) {
+                display.textContent += number.textContent;
+                equation.second = parseFloat(display.textContent);
+            } else {
+                display.textContent += number.textContent;
+            }
+            
         }
-        display.textContent += number.textContent;
     })
 });
 
@@ -72,6 +84,10 @@ const clear = document.querySelector('.clear');            // Clear button
 clear.addEventListener('click', () => {
 
     display.textContent = '';
+
+    equation.first = undefined;
+    equation.operation = undefined;
+    equation.second = undefined; 
 });
 
 
@@ -93,13 +109,20 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
-    equation.first = parseFloat(display.textContent);
+        plus.setAttribute('style', 'background: gray;');
+        equation.operation = '+';
+        checkOper = true;
 
-    display.textContent += ' + ';
-    checkOper = true;
+        if (equation.second === undefined) {
+            equation.first = parseFloat(display.textContent);
+        } else {
+            equation.first = equal();
+            display.textContent = equation.first;
+        }
+
 });
 
-
+/*
 
 const minus = document.querySelector('.subtract');      // Minus sign button
 
@@ -116,7 +139,7 @@ const times = document.querySelector('.multiply');      // Multiply button
 times.addEventListener('click', () => {
 
     display.textContent += ' * ';
-    checkOper = true;
+
 });
 
 
@@ -126,7 +149,7 @@ const division = document.querySelector('.divide');       // Division button
 division.addEventListener('click', () => {
 
     display.textContent += ' / ';
-    checkOper = true;
+
 });
 
 
@@ -136,7 +159,7 @@ const power = document.querySelector('.exponent');          // Exponent button
 power.addEventListener('click', () => {
 
     display.textContent += ' ^ ';
-    checkOper = true;
+    
 });
 
 
@@ -161,3 +184,22 @@ sign.addEventListener('click', () => {
         display.textContent = '-' + display.textContent;
     }
 });
+
+*/
+
+function equal() {
+
+
+    if (equation.operation === '+' && equation.second) {
+        equation.first = operate(equation.operation, equation.first, equation.second)
+        display.textContent = equation.first;
+        equation.second = undefined;
+        return equation.first;
+    } else if (equation.operation === '+' && !equation.second) {
+        return display.textContent;
+    }
+};
+
+const equalSign = document.querySelector('.equal');             // Equal sign button
+
+equalSign.addEventListener('click', equal);
