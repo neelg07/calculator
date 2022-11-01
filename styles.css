@@ -112,3 +112,8 @@ button:active {
 .equal:active {
     background-color: gray;
 }
+
+button:disabled {
+    border: 2px solid black;
+    color: black;
+}
