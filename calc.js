@@ -79,6 +79,10 @@ digits.forEach((number) => {                                // Number buttons
 
         if (display.textContent.length < 19) {
 
+            if (equation.addition === true) {
+                plus.removeAttribute('style');
+            }
+
             if (display.textContent === '0') {                          // Update display properly if changing from '0'
                 display.textContent = number.textContent;
             } else {
@@ -123,9 +127,16 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
+    if (equation.addition && equation.second) {
+        // Return operation of two values added
+    }
+
+    equation.addition = true;
+    plus.setAttribute('style', 'background: gray;');
+    display.textContent = '';
 });
 
-
+/*
 
 const minus = document.querySelector('.subtract');      // Minus sign button
 
@@ -134,7 +145,7 @@ minus.addEventListener('click', () => {
 });
 
 
-/*
+
 const times = document.querySelector('.multiply');      // Multiply button
 
 times.addEventListener('click', () => {
