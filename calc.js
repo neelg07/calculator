@@ -50,6 +50,13 @@ let equation = {
 };
 
 
+function clearAttribute() {                                 // removes 'clicked' effect on operators
+
+    plus.removeAttribute('style');
+}
+
+
+
 function updateEquation() {
     
     if (equation.addition === false &&
@@ -81,7 +88,12 @@ digits.forEach((number) => {                                // Number buttons
 
             if (equation.addition === true) {
                 plus.removeAttribute('style');
-            }
+
+                if (!equation.second) {                             // for 2 or more plus sign clicks
+                    display.textContent = '';
+                }
+            } 
+
 
             if (display.textContent === '0') {                          // Update display properly if changing from '0'
                 display.textContent = number.textContent;
@@ -110,6 +122,8 @@ clear.addEventListener('click', () => {
     equation.multiplication = false;
     equation.division = false;
     equation.power = false;
+
+    clearAttribute();
 });
 
 
@@ -127,13 +141,19 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
-    if (equation.addition && equation.second) {
-        // Return operation of two values added
+    if (equation.first && !equation.addition) {                   // Pressing before second operand input
+        plus.setAttribute('style', 'background: gray;');
+        equation.addition = true;
+        display.textContent = '';
     }
 
-    equation.addition = true;
-    plus.setAttribute('style', 'background: gray;');
-    display.textContent = '';
+    if (equation.first && equation.second && equation.addition) {       // Pressing >once to perform equal operation
+        plus.setAttribute('style', 'background: gray;');
+        equal();
+        equation.addition = true;
+    }
+
+     
 });
 
 /*
@@ -204,7 +224,7 @@ sign.addEventListener('click', () => {
 function equal() {
     
     if (equation.addition) {
-        
+
         equation.first = operate('+', equation.first, equation.second);
         equation.second = undefined;
         equation.addition = false;
