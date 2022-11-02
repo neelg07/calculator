@@ -53,6 +53,7 @@ let equation = {
 function clearAttribute() {                                 // removes 'clicked' effect on operators
 
     plus.removeAttribute('style');
+    minus.removeAttribute('style');
 }
 
 
@@ -84,15 +85,26 @@ digits.forEach((number) => {                                // Number buttons
             alert('Too many numbers');
         }
 
+
+
         if (display.textContent.length < 19) {
 
-            if (equation.addition === true) {
+
+            if (equation.addition) {                   // Add operator
                 plus.removeAttribute('style');
 
                 if (!equation.second) {                             // for 2 or more plus sign clicks
                     display.textContent = '';
                 }
-            } 
+            }
+
+            if (equation.subtraction) {                 // Subtract operator
+                minus.removeAttribute('style');
+
+                if (!equation.second) {
+                    display.textContent = '';
+                }
+            }
 
 
             if (display.textContent === '0') {                          // Update display properly if changing from '0'
@@ -141,30 +153,46 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
-    if (equation.first && !equation.addition) {                   // Pressing before second operand input
+    minus.removeAttribute('style');
+    equation.subtraction = false;
+
+    if ((equation.first || equation.first === 0) && !equation.addition) {                   // Pressing before second operand input
         plus.setAttribute('style', 'background: gray;');
         equation.addition = true;
         display.textContent = '';
     }
 
-    if (equation.first && equation.second && equation.addition) {       // Pressing >once to perform equal operation
+    if ((equation.first || equation.first === 0) && equation.second && equation.addition) {       // Pressing >once to perform equal operation
         plus.setAttribute('style', 'background: gray;');
         equal();
         equation.addition = true;
     }
 
-     
 });
 
-/*
+
 
 const minus = document.querySelector('.subtract');      // Minus sign button
 
 minus.addEventListener('click', () => {
 
+    plus.removeAttribute('style');
+    equation.addition = false;
+
+    if ((equation.first || equation.first === 0) && !equation.subtraction) {          // First consecutive minus sign click
+        minus.setAttribute('style', 'background: gray;');
+        equation.subtraction = true;
+        display.textContent = '';
+    }
+
+    if ((equation.first || equation.first === 0) && equation.second && equation.subtraction) {        // consecutive minus operations
+        minus.setAttribute('style', 'background: gray;');
+        equal();
+        equation.subtraction = true;
+    }
 });
 
-
+/*
 
 const times = document.querySelector('.multiply');      // Multiply button
 
@@ -222,12 +250,20 @@ sign.addEventListener('click', () => {
 
 
 function equal() {
-    
-    if (equation.addition) {
+
+    if (equation.addition) {                                                    // For addition
 
         equation.first = operate('+', equation.first, equation.second);
         equation.second = undefined;
         equation.addition = false;
+        display.textContent = equation.first;
+    }
+
+    if (equation.subtraction) {                                           // For subtraction
+
+        equation.first = operate('-', equation.first, equation.second);
+        equation.second = undefined;
+        equation.subtraction = false;
         display.textContent = equation.first;
     }
 };
