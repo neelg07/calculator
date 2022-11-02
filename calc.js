@@ -202,7 +202,14 @@ sign.addEventListener('click', () => {
 
 
 function equal() {
-
+    
+    if (equation.addition) {
+        
+        equation.first = operate('+', equation.first, equation.second);
+        equation.second = undefined;
+        equation.addition = false;
+        display.textContent = equation.first;
+    }
 };
 
 const equalSign = document.querySelector('.equal');             // Equal sign button
