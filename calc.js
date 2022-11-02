@@ -34,19 +34,35 @@ function operate(op, x, y) {
 
 // Populating Display w/ EventListeners
 
-function checkDisplay() {
-    return display.textContent.length >= 17;
-}
-
-let checkOper = false;
-
-
 // Operation class object
 
 let equation = {
+
     first: undefined,
-    operation: undefined,
     second: undefined,
+
+    addition: false,
+    subtraction: false,
+    multiplication: false,
+    division: false,
+    power: false,
+    
+};
+
+
+function updateEquation() {
+    
+    if (equation.addition === false &&
+        equation.subtraction === false &&
+        equation.multiplication === false && 
+        equation.division === false && 
+        equation.power === false) {
+
+            equation.first = parseFloat(display.textContent);
+        } else {
+
+            equation.second = parseFloat(display.textContent);
+        }
 };
 
 
@@ -57,23 +73,21 @@ digits.forEach((number) => {                                // Number buttons
 
     number.addEventListener('click', () => {
 
-        if (display.textContent.length >= 19) {
+        if (display.textContent.length >= 19) {             // Do not let display exceed 19 char spaces
             alert('Too many numbers');
-        } else {
+        }
 
-            if (checkOper) {
+        if (display.textContent.length < 19) {
+
+            if (display.textContent === '0') {                          // Update display properly if changing from '0'
                 display.textContent = number.textContent;
-                plus.removeAttribute('style');
-                checkOper = false;
-                equation.second = parseFloat(display.textContent);
-            } else if (equation.first) {
-                display.textContent += number.textContent;
-                equation.second = parseFloat(display.textContent);
             } else {
                 display.textContent += number.textContent;
             }
-            
+            updateEquation();
+
         }
+
     })
 });
 
@@ -85,9 +99,13 @@ clear.addEventListener('click', () => {
 
     display.textContent = '';
 
-    equation.first = undefined;
-    equation.operation = undefined;
+    equation.first = undefined;                            // reset display and equation class properties
     equation.second = undefined; 
+    equation.addition = false;
+    equation.subtraction = false;
+    equation.multiplication = false;
+    equation.division = false;
+    equation.power = false;
 });
 
 
@@ -96,10 +114,6 @@ const del = document.querySelector('.delete');           // Delete button
 
 del.addEventListener('click', () => {
 
-    if (display.textContent[display.textContent.length - 1] === ' ') {                                 // If operater (' + ') delete until next non-space char
-        
-        display.textContent = display.textContent.substring(0, display.textContent.length - 3);
-    }
     display.textContent = display.textContent.substring(0, display.textContent.length - 1);
 });
 
@@ -109,31 +123,18 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
-        plus.setAttribute('style', 'background: gray;');
-        equation.operation = '+';
-        checkOper = true;
-
-        if (equation.second === undefined) {
-            equation.first = parseFloat(display.textContent);
-        } else {
-            equation.first = equal();
-            display.textContent = equation.first;
-        }
-
 });
 
-/*
+
 
 const minus = document.querySelector('.subtract');      // Minus sign button
 
 minus.addEventListener('click', () => {
 
-    display.textContent += ' - ';
-    checkOper = true;
 });
 
 
-
+/*
 const times = document.querySelector('.multiply');      // Multiply button
 
 times.addEventListener('click', () => {
@@ -172,7 +173,7 @@ decimal.addEventListener('click', () => {
     decimal.disabled = true;
 });
 
-
+*/
 
 const sign = document.querySelector('.sign');           // Change sign button
 
@@ -180,24 +181,17 @@ sign.addEventListener('click', () => {
 
     if (display.textContent[0] === '-') {
         display.textContent = display.textContent.substring(1);
+        updateEquation();
     } else {
         display.textContent = '-' + display.textContent;
+        updateEquation();
     }
 });
 
-*/
+
 
 function equal() {
 
-
-    if (equation.operation === '+' && equation.second) {
-        equation.first = operate(equation.operation, equation.first, equation.second)
-        display.textContent = equation.first;
-        equation.second = undefined;
-        return equation.first;
-    } else if (equation.operation === '+' && !equation.second) {
-        return display.textContent;
-    }
 };
 
 const equalSign = document.querySelector('.equal');             // Equal sign button
