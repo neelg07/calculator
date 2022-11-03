@@ -74,7 +74,9 @@ function updateEquation() {
 };
 
 
-const display = document.querySelector('.display');
+const display = document.querySelector('.main-data');           // main data and raw data display
+const raw = document.querySelector('.raw-data');
+
 const digits = document.querySelectorAll('.number'); 
 
 digits.forEach((number) => {                                // Number buttons
@@ -165,12 +167,14 @@ plus.addEventListener('click', () => {                  // Plus sign button
         plus.setAttribute('style', 'background: gray;');
         equation.addition = true;
         display.textContent = '';
+        raw.textContent = equation.first + ' + ';
     }
 
     if ((equation.first || equation.first === 0) && equation.second && equation.addition) {       // Pressing >once to perform equal operation
         plus.setAttribute('style', 'background: gray;');
         equal();
         equation.addition = true;
+        raw.textContent = equation.first + ' + ';
     }
 
 });
@@ -264,6 +268,7 @@ function equal() {
 
     if (equation.addition) {                                                    // For addition
 
+        raw.textContent = equation.first + ' + ' + equation.second;
         equation.first = operate('+', equation.first, equation.second);
         equation.second = undefined;
         equation.addition = false;
@@ -272,6 +277,7 @@ function equal() {
 
     if (equation.subtraction) {                                           // For subtraction
 
+        raw.textContent = equation.first + ' - ' + equation.second;
         equation.first = operate('-', equation.first, equation.second);
         equation.second = undefined;
         equation.subtraction = false;
