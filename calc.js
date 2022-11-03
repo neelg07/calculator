@@ -153,7 +153,12 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
-    minus.removeAttribute('style');
+    if (equation.subtraction || equation.multiplication || equation.division || equation.power) {              // switching operations b4 solving
+        equal();
+        display.textContent = equation.first;
+    }
+
+    minus.removeAttribute('style');                 // remove data from other operators
     equation.subtraction = false;
 
     if ((equation.first || equation.first === 0) && !equation.addition) {                   // Pressing before second operand input
@@ -176,8 +181,13 @@ const minus = document.querySelector('.subtract');      // Minus sign button
 
 minus.addEventListener('click', () => {
 
-    plus.removeAttribute('style');
-    equation.addition = false;
+    if (equation.addition || equation.multiplication || equation.division || equation.power) {          //switching operations
+        equal();
+        display.textContent = equation.first;
+    }
+
+    plus.removeAttribute('style');                             // remove data from other operators
+    equation.addition = false;  
 
     if ((equation.first || equation.first === 0) && !equation.subtraction) {          // First consecutive minus sign click
         minus.setAttribute('style', 'background: gray;');
@@ -190,6 +200,7 @@ minus.addEventListener('click', () => {
         equal();
         equation.subtraction = true;
     }
+
 });
 
 /*
