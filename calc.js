@@ -37,7 +37,14 @@ function divide(a, b) {
     if (b === 0 || b === '0') {
         return 'ZeroDivisionError';
     }
-    return a / b;
+    let soln = a / b;
+
+    if (soln.toString().length >= 17) {
+        soln = soln.toPrecision(9);
+        return parseFloat(soln);
+    } else {
+        return soln;
+    }
 };
 
 function operate(op, x, y) {
@@ -88,6 +95,7 @@ function clearAttribute() {                                 // removes 'clicked'
     plus.removeAttribute('style');
     minus.removeAttribute('style');
     times.removeAttribute('style');
+    division.removeAttribute('style');
 }
 
 
@@ -144,6 +152,14 @@ digits.forEach((number) => {                                // Number buttons
 
             if (equation.multiplication) {          // Multiply operator
                 times.removeAttribute('style');
+
+                if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {
+                    display.textContent = '';
+                }
+            }
+
+            if (equation.division) {                    // division operator
+                division.removeAttribute('style');
 
                 if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {
                     display.textContent = '';
@@ -209,7 +225,9 @@ plus.addEventListener('click', () => {                  // Plus sign button
     minus.removeAttribute('style');                 // remove data from other operators
     equation.subtraction = false;
     times.removeAttribute('style');
-    equation.multiplication = false; 
+    equation.multiplication = false;
+    division.removeAttribute('style');
+    equation.division = false; 
 
     if ((equation.first || equation.first === 0) && !equation.addition) {                   // Pressing before second operand input
         plus.setAttribute('style', 'background: gray;');
@@ -243,7 +261,9 @@ minus.addEventListener('click', () => {
     plus.removeAttribute('style');                             // remove data from other operators
     equation.addition = false;
     times.removeAttribute('style');
-    equation.multiplication = false;  
+    equation.multiplication = false;
+    division.removeAttribute('style');
+    equation.division = false;  
 
     if ((equation.first || equation.first === 0) && !equation.subtraction) {          // First consecutive minus sign click
         minus.setAttribute('style', 'background: gray;');
@@ -279,6 +299,8 @@ times.addEventListener('click', () => {
     equation.addition = false;
     minus.removeAttribute('style');
     equation.subtraction = false;
+    division.removeAttribute('style');
+    equation.division = false;
 
     if ((equation.first || equation.first === 0) && !equation.multiplication) {
         times.setAttribute('style', 'background: gray;');
@@ -296,17 +318,44 @@ times.addEventListener('click', () => {
 
 });
 
-/*
+
 
 const division = document.querySelector('.divide');       // Division button
 
 division.addEventListener('click', () => {
 
-    display.textContent += ' / ';
+    decimal.disabled = false; 
+
+    if (equation.addition || equation.subtraction || equation.multiplication || equation.power) {
+        equal();
+        display.textContent = equation.first;
+    }
+
+    plus.removeAttribute('style');
+    equation.addition = false;
+    minus.removeAttribute('style');
+    equation.subtraction = false;
+    times.removeAttribute('style');
+    equation.multiplication = false;
+
+    if ((equation.first || equation.first === 0) && !equation.division) {
+        division.setAttribute('style', 'background: gray;');
+        equation.division = true;
+        display.textContent = '';
+        raw.textContent = equation.first + ' / ';
+    }
+
+    if ((equation.first || equation.first === 0) && equation.second && equation.division) {
+        division.setAttribute('style', 'background: gray;');
+        equal();
+        equation.division = true;
+        raw.textContent = equation.first + ' / ';
+    }
 
 });
 
 
+/*
 
 const power = document.querySelector('.exponent');          // Exponent button
 
@@ -371,6 +420,15 @@ function equal() {
         equation.first = operate('*', equation.first, equation.second);
         equation.second = undefined;
         equation.multiplication = false;
+        display.textContent = equation.first;
+    }
+
+    if (equation.division) {                                                    // division
+
+        raw.textContent = equation.first + ' / ' + equation.second;
+        equation.first = operate('/', equation.first, equation.second);
+        equation.second = undefined;
+        equation.division = false;
         display.textContent = equation.first;
     }
 
