@@ -50,7 +50,17 @@ let equation = {
 };
 
 
-function clearAttribute() {                                 // removes 'clicked' effect on operators
+function clearAttribute() {                                 // removes 'clicked' effect on operators & raw data
+
+    raw.textContent = '--';
+
+    equation.first = undefined;                            // reset display and equation class properties
+    equation.second = undefined; 
+    equation.addition = false;
+    equation.subtraction = false;
+    equation.multiplication = false;
+    equation.division = false;
+    equation.power = false;
 
     plus.removeAttribute('style');
     minus.removeAttribute('style');
@@ -128,16 +138,8 @@ const clear = document.querySelector('.clear');            // Clear button
 clear.addEventListener('click', () => {
 
     display.textContent = '';
-
-    equation.first = undefined;                            // reset display and equation class properties
-    equation.second = undefined; 
-    equation.addition = false;
-    equation.subtraction = false;
-    equation.multiplication = false;
-    equation.division = false;
-    equation.power = false;
-
     clearAttribute();
+
 });
 
 
@@ -146,7 +148,17 @@ const del = document.querySelector('.delete');           // Delete button
 
 del.addEventListener('click', () => {
 
-    display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+    if (display.textContent === '') {
+        clearAttribute();
+    } else if (equation.first === NaN) {
+        equation.first = undefined;
+    } else if (equation.second = NaN) {
+        equation.second = undefined;
+    } else {
+        display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+        updateEquation();
+    }
+
 });
 
 
@@ -197,12 +209,14 @@ minus.addEventListener('click', () => {
         minus.setAttribute('style', 'background: gray;');
         equation.subtraction = true;
         display.textContent = '';
+        raw.textContent = equation.first + ' - ';
     }
 
     if ((equation.first || equation.first === 0) && equation.second && equation.subtraction) {        // consecutive minus operations
         minus.setAttribute('style', 'background: gray;');
         equal();
         equation.subtraction = true;
+        raw.textContent = equation.first + ' - ';
     }
 
 });
