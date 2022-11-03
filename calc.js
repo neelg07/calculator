@@ -1,11 +1,25 @@
 // Basic math functions
 
 function add(a, b) {
-    return +a + +b;
+    let soln = parseFloat(a) + parseFloat(b);
+    
+    if (soln.toString().length >= 17) {
+        soln = soln.toPrecision(9);                     // If answer too long, round to 9 decimal places
+        return parseFloat(soln);
+    } else {
+        return soln;
+    }
 };
 
 function subtract(a, b) {
-    return a - b;
+    let soln = a - b;
+
+    if (soln.toString().length >= 17) {
+        soln = soln.toPrecision(9);
+        return parseFloat(soln);
+    } else {
+        return soln;
+    }
 };
 
 function multiply(a, b) {
@@ -61,6 +75,8 @@ function clearAttribute() {                                 // removes 'clicked'
     equation.multiplication = false;
     equation.division = false;
     equation.power = false;
+    
+    decimal.disabled = false;
 
     plus.removeAttribute('style');
     minus.removeAttribute('style');
@@ -105,7 +121,7 @@ digits.forEach((number) => {                                // Number buttons
             if (equation.addition) {                   // Add operator
                 plus.removeAttribute('style');
 
-                if (!equation.second && display.textContent !== '-') {                             // for 2 or more plus sign clicks
+                if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {                             // for 2 or more plus sign clicks
                     display.textContent = '';
                 }
             }
@@ -113,7 +129,7 @@ digits.forEach((number) => {                                // Number buttons
             if (equation.subtraction) {                 // Subtract operator
                 minus.removeAttribute('style');
 
-                if (!equation.second && display.textContent !== '-') {
+                if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {
                     display.textContent = '';
                 }
             }
@@ -167,6 +183,8 @@ const plus = document.querySelector('.add');
 
 plus.addEventListener('click', () => {                  // Plus sign button
 
+    decimal.disabled = false;
+
     if (equation.subtraction || equation.multiplication || equation.division || equation.power) {              // switching operations b4 solving
         equal();
         display.textContent = equation.first;
@@ -197,6 +215,8 @@ const minus = document.querySelector('.subtract');      // Minus sign button
 
 minus.addEventListener('click', () => {
 
+    decimal.disabled = false;
+
     if (equation.addition || equation.multiplication || equation.division || equation.power) {          //switching operations
         equal();
         display.textContent = equation.first;
@@ -220,6 +240,7 @@ minus.addEventListener('click', () => {
     }
 
 });
+
 
 /*
 
@@ -251,7 +272,7 @@ power.addEventListener('click', () => {
     
 });
 
-
+*/
 
 const decimal = document.querySelector('.decimal');         // Decimal button
 
@@ -261,7 +282,9 @@ decimal.addEventListener('click', () => {
     decimal.disabled = true;
 });
 
-*/
+
+
+
 
 const sign = document.querySelector('.sign');           // Change sign button
 
@@ -297,6 +320,9 @@ function equal() {
         equation.subtraction = false;
         display.textContent = equation.first;
     }
+
+    decimal.disabled = false;
+
 };
 
 const equalSign = document.querySelector('.equal');             // Equal sign button
