@@ -28,13 +28,27 @@
 }
 
 .display {
+    display: flex;
+    flex-flow: column;
     border: 2px solid black;
+    background-color: #FEF0C9;
+}
+
+.main-data {
     text-align: end;
     line-height: 70px;
-    height: 70px;
+    height: 50px;
     padding: 5px;
-    background-color: #FEF0C9;
+    padding-bottom: 10px;
     font-size: 30px;
+    margin-top: -10px;
+}
+
+.raw-data {
+    text-align: end;
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 15px;
 }
 
 /* buttons div class */
