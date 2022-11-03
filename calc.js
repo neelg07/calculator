@@ -105,7 +105,7 @@ digits.forEach((number) => {                                // Number buttons
             if (equation.addition) {                   // Add operator
                 plus.removeAttribute('style');
 
-                if (!equation.second) {                             // for 2 or more plus sign clicks
+                if (!equation.second && display.textContent !== '-') {                             // for 2 or more plus sign clicks
                     display.textContent = '';
                 }
             }
@@ -113,7 +113,7 @@ digits.forEach((number) => {                                // Number buttons
             if (equation.subtraction) {                 // Subtract operator
                 minus.removeAttribute('style');
 
-                if (!equation.second) {
+                if (!equation.second && display.textContent !== '-') {
                     display.textContent = '';
                 }
             }
