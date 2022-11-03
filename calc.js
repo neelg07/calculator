@@ -23,7 +23,14 @@ function subtract(a, b) {
 };
 
 function multiply(a, b) {
-    return a * b;
+    let soln = a * b;
+
+    if (soln.toString().length >= 17) {
+        soln = soln.toPrecision(9);
+        return parseFloat(soln);
+    } else {
+        return soln;
+    }
 };
 
 function divide(a, b) {
@@ -80,6 +87,7 @@ function clearAttribute() {                                 // removes 'clicked'
 
     plus.removeAttribute('style');
     minus.removeAttribute('style');
+    times.removeAttribute('style');
 }
 
 
@@ -128,6 +136,14 @@ digits.forEach((number) => {                                // Number buttons
 
             if (equation.subtraction) {                 // Subtract operator
                 minus.removeAttribute('style');
+
+                if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {
+                    display.textContent = '';
+                }
+            }
+
+            if (equation.multiplication) {          // Multiply operator
+                times.removeAttribute('style');
 
                 if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {
                     display.textContent = '';
@@ -192,6 +208,8 @@ plus.addEventListener('click', () => {                  // Plus sign button
 
     minus.removeAttribute('style');                 // remove data from other operators
     equation.subtraction = false;
+    times.removeAttribute('style');
+    equation.multiplication = false; 
 
     if ((equation.first || equation.first === 0) && !equation.addition) {                   // Pressing before second operand input
         plus.setAttribute('style', 'background: gray;');
@@ -223,7 +241,9 @@ minus.addEventListener('click', () => {
     }
 
     plus.removeAttribute('style');                             // remove data from other operators
-    equation.addition = false;  
+    equation.addition = false;
+    times.removeAttribute('style');
+    equation.multiplication = false;  
 
     if ((equation.first || equation.first === 0) && !equation.subtraction) {          // First consecutive minus sign click
         minus.setAttribute('style', 'background: gray;');
@@ -242,17 +262,41 @@ minus.addEventListener('click', () => {
 });
 
 
-/*
+
 
 const times = document.querySelector('.multiply');      // Multiply button
 
 times.addEventListener('click', () => {
 
-    display.textContent += ' * ';
+    decimal.disabled = false;
+
+    if (equation.addition || equation.subtraction || equation.division || equation.power) {
+        equal();
+        display.textContent = equation.first;
+    }
+
+    plus.removeAttribute('style');
+    equation.addition = false;
+    minus.removeAttribute('style');
+    equation.subtraction = false;
+
+    if ((equation.first || equation.first === 0) && !equation.multiplication) {
+        times.setAttribute('style', 'background: gray;');
+        equation.multiplication = true;
+        display.textContent = '';
+        raw.textContent = equation.first + ' * ';
+    }
+
+    if ((equation.first || equation.first === 0) && equation.second && equation.multiplication) {
+        times.setAttribute('style', 'background: gray;');
+        equal();
+        equation.multiplication = true;
+        raw.textContent = equation.first + ' * ';
+    }
 
 });
 
-
+/*
 
 const division = document.querySelector('.divide');       // Division button
 
@@ -318,6 +362,15 @@ function equal() {
         equation.first = operate('-', equation.first, equation.second);
         equation.second = undefined;
         equation.subtraction = false;
+        display.textContent = equation.first;
+    }
+
+    if (equation.multiplication) {                                              // multiplying 
+
+        raw.textContent = equation.first + ' * ' + equation.second;
+        equation.first = operate('*', equation.first, equation.second);
+        equation.second = undefined;
+        equation.multiplication = false;
         display.textContent = equation.first;
     }
 
