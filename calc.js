@@ -446,6 +446,8 @@ sign.addEventListener('click', () => {
         display.textContent = display.textContent.substring(1);
         updateEquation();
     } else {
+
+        (display.textContent === '0') ? display.textContent = '-' : 
         display.textContent = '-' + display.textContent;
         updateEquation();
     }
@@ -507,3 +509,88 @@ function equal() {
 const equalSign = document.querySelector('.equal');             // Equal sign button
 
 equalSign.addEventListener('click', equal);
+
+
+// Keyboard inputs
+
+const zero = document.getElementById('0');
+const one = document.getElementById('1');
+const two = document.getElementById('2');
+const three = document.getElementById('3');
+const four = document.getElementById('4');
+const five = document.getElementById('5');
+const six = document.getElementById('6');
+const seven = document.getElementById('7');
+const eight = document.getElementById('8');
+const nine = document.getElementById('9');
+
+document.addEventListener('keydown', function(event) {
+
+    switch (event.key) {
+        // Number keys
+        case '0':
+            zero.click();
+            break;
+        case '1': 
+            one.click();
+            break;
+        case '2':
+            two.click();
+            break;
+        case '3':
+            three.click();
+            break;
+        case '4':
+            four.click();
+            break;
+        case '5':
+            five.click();
+            break;
+        case '6':
+            six.click();
+            break;
+        case "7":
+            seven.click();
+            break;
+        case '8':
+            eight.click();
+            break;
+        case '9':
+            nine.click();
+            break;
+
+        // Operators
+        case "+":
+            plus.click();
+            break;
+
+        case '-':
+            (display.textContent === '' || display.textContent === '0') ? sign.click() : minus.click();
+            break;
+
+        case '*':
+            times.click();
+            break;
+        case '/':
+            division.click();
+            break;
+        case '^':
+            power.click();
+            break;
+
+        // Misc
+        case '.':
+            decimal.click();
+            break;
+        case '=':
+            equalSign.click();
+            break;
+        case 'Enter':
+            equalSign.click();
+            break;
+        case 'Backspace':
+            del.click();
+            break;
+        
+    }
+});
