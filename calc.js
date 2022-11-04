@@ -87,6 +87,7 @@ let equation = {
     multiplication: false,
     division: false,
     power: false,
+    equal: false,
     
 };
 
@@ -102,6 +103,7 @@ function clearAttribute() {                                 // removes 'clicked'
     equation.multiplication = false;
     equation.division = false;
     equation.power = false;
+    equation.equal = false;
     
     decimal.disabled = false;
 
@@ -190,7 +192,10 @@ digits.forEach((number) => {                                // Number buttons
                 }
             }
 
-
+            if (equation.equal && display.textContent) {            // Number input resets display right after equal sign operation
+                display.textContent = '';
+                equation.equal = false;
+            } 
 
             if (display.textContent === '0') {                          // Update display properly if changing from '0'
                 display.textContent = number.textContent;
@@ -254,7 +259,8 @@ plus.addEventListener('click', () => {                  // Plus sign button
     division.removeAttribute('style');
     equation.division = false;
     power.removeAttribute('style');
-    equation.power = false; 
+    equation.power = false;
+    equation.equal = false; 
 
     if ((equation.first || equation.first === 0) && !equation.addition) {                   // Pressing before second operand input
         plus.setAttribute('style', 'background: gray;');
@@ -292,7 +298,8 @@ minus.addEventListener('click', () => {
     division.removeAttribute('style');
     equation.division = false;
     power.removeAttribute('style');
-    equation.power = false;  
+    equation.power = false;
+    equation.equal = false; 
 
     if ((equation.first || equation.first === 0) && !equation.subtraction) {          // First consecutive minus sign click
         minus.setAttribute('style', 'background: gray;');
@@ -332,6 +339,7 @@ times.addEventListener('click', () => {
     equation.division = false;
     power.removeAttribute('style');
     equation.power = false;
+    equation.equal = false;
 
     if ((equation.first || equation.first === 0) && !equation.multiplication) {
         times.setAttribute('style', 'background: gray;');
@@ -370,6 +378,7 @@ division.addEventListener('click', () => {
     equation.multiplication = false;
     power.removeAttribute('style');
     equation.power = false;
+    equation.equal = false;
 
     if ((equation.first || equation.first === 0) && !equation.division) {
         division.setAttribute('style', 'background: gray;');
@@ -409,6 +418,7 @@ power.addEventListener('click', () => {
     equation.multiplication = false;
     division.removeAttribute('style');
     equation.division = false;
+    equation.equal = false;
 
     if ((equation.first || equation.first === 0) && !equation.power) {
         power.setAttribute('style', 'background: gray;');
@@ -505,6 +515,7 @@ function equal() {
     }
 
     decimal.disabled = false;
+    equation.equal = true;
 
 };
 
