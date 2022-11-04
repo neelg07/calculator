@@ -528,6 +528,8 @@ const nine = document.getElementById('9');
 
 document.addEventListener('keydown', function(event) {
 
+    equalSign.focus();
+
     switch (event.key) {
         // Number keys
         case '0':
