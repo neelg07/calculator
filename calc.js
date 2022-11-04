@@ -47,6 +47,17 @@ function divide(a, b) {
     }
 };
 
+function exponent(a, b) {
+    let soln = Math.pow(a, b);
+
+    if (soln.toString().length >= 17) {
+        soln = soln.toPrecision(9);
+        return parseFloat(soln);
+    } else {
+        return soln;
+    }
+};
+
 function operate(op, x, y) {
     
     if (op === '+') {
@@ -57,6 +68,8 @@ function operate(op, x, y) {
         return multiply(x, y)
     } else if (op === '/') {
         return divide(x, y)
+    } else if (op === '^') {
+        return exponent(x, y)
     }
 };
 
@@ -96,6 +109,7 @@ function clearAttribute() {                                 // removes 'clicked'
     minus.removeAttribute('style');
     times.removeAttribute('style');
     division.removeAttribute('style');
+    power.removeAttribute('style');
 }
 
 
@@ -166,6 +180,15 @@ digits.forEach((number) => {                                // Number buttons
                 }
             }
 
+            if (equation.power) {                       // exponent operator
+                power.removeAttribute('style');
+
+                if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {
+                    display.textContent = '';
+                }
+            }
+
+
 
             if (display.textContent === '0') {                          // Update display properly if changing from '0'
                 display.textContent = number.textContent;
@@ -227,7 +250,9 @@ plus.addEventListener('click', () => {                  // Plus sign button
     times.removeAttribute('style');
     equation.multiplication = false;
     division.removeAttribute('style');
-    equation.division = false; 
+    equation.division = false;
+    power.removeAttribute('style');
+    equation.power = false; 
 
     if ((equation.first || equation.first === 0) && !equation.addition) {                   // Pressing before second operand input
         plus.setAttribute('style', 'background: gray;');
@@ -263,7 +288,9 @@ minus.addEventListener('click', () => {
     times.removeAttribute('style');
     equation.multiplication = false;
     division.removeAttribute('style');
-    equation.division = false;  
+    equation.division = false;
+    power.removeAttribute('style');
+    equation.power = false;  
 
     if ((equation.first || equation.first === 0) && !equation.subtraction) {          // First consecutive minus sign click
         minus.setAttribute('style', 'background: gray;');
@@ -301,6 +328,8 @@ times.addEventListener('click', () => {
     equation.subtraction = false;
     division.removeAttribute('style');
     equation.division = false;
+    power.removeAttribute('style');
+    equation.power = false;
 
     if ((equation.first || equation.first === 0) && !equation.multiplication) {
         times.setAttribute('style', 'background: gray;');
@@ -337,6 +366,8 @@ division.addEventListener('click', () => {
     equation.subtraction = false;
     times.removeAttribute('style');
     equation.multiplication = false;
+    power.removeAttribute('style');
+    equation.power = false;
 
     if ((equation.first || equation.first === 0) && !equation.division) {
         division.setAttribute('style', 'background: gray;');
@@ -355,17 +386,45 @@ division.addEventListener('click', () => {
 });
 
 
-/*
+
 
 const power = document.querySelector('.exponent');          // Exponent button
 
 power.addEventListener('click', () => {
 
-    display.textContent += ' ^ ';
+    decimal.disabled = false;
+
+    if (equation.addition || equation.subtraction || equation.multiplication || equation.division) {
+        equal();
+        display.textContent = equation.first;
+    }
+
+    plus.removeAttribute('style');
+    equation.addition = false;
+    minus.removeAttribute('style');
+    equation.subtraction = false;
+    times.removeAttribute('style');
+    equation.multiplication = false;
+    division.removeAttribute('style');
+    equation.division = false;
+
+    if ((equation.first || equation.first === 0) && !equation.power) {
+        power.setAttribute('style', 'background: gray;');
+        equation.power = true;
+        display.textContent = '';
+        raw.textContent = equation.first + '^';
+    }
+
+    if ((equation.first || equation.first === 0) && equation.second && equation.power) {
+        power.setAttribute('style', 'background: gray;');
+        equal();
+        equation.power = true;
+        raw.textContent = equation.power + '^';
+    }
     
 });
 
-*/
+
 
 const decimal = document.querySelector('.decimal');         // Decimal button
 
@@ -429,6 +488,15 @@ function equal() {
         equation.first = operate('/', equation.first, equation.second);
         equation.second = undefined;
         equation.division = false;
+        display.textContent = equation.first;
+    }
+
+    if (equation.power) {                                                 // raise to power
+
+        raw.textContent = equation.first + '^' + equation.second;
+        equation.first = operate('^', equation.first, equation.second);
+        equation.second = undefined;
+        equation.power = false;
         display.textContent = equation.first;
     }
 
