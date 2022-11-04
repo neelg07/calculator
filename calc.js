@@ -147,8 +147,10 @@ digits.forEach((number) => {                                // Number buttons
 
         if (display.textContent.length < 19) {
 
+            
+            // If number key is pressed right after operator button
 
-            if (equation.addition) {                   // Add operator
+            if (equation.addition) {                   // Addition operator
                 plus.removeAttribute('style');
 
                 if (!equation.second && display.textContent !== '-' && display.textContent !== '.') {                             // for 2 or more plus sign clicks
@@ -240,7 +242,7 @@ plus.addEventListener('click', () => {                  // Plus sign button
 
     decimal.disabled = false;
 
-    if (equation.subtraction || equation.multiplication || equation.division || equation.power) {              // switching operations b4 solving
+    if ((equation.subtraction || equation.multiplication || equation.division || equation.power) && equation.second) {              // switching operations b4 solving
         equal();
         display.textContent = equation.first;
     }
@@ -278,10 +280,10 @@ minus.addEventListener('click', () => {
 
     decimal.disabled = false;
 
-    if (equation.addition || equation.multiplication || equation.division || equation.power) {          //switching operations
+    if ((equation.addition || equation.multiplication || equation.division || equation.power) && equation.second) {          //switching operations
         equal();
         display.textContent = equation.first;
-    }
+    } 
 
     plus.removeAttribute('style');                             // remove data from other operators
     equation.addition = false;
@@ -317,7 +319,7 @@ times.addEventListener('click', () => {
 
     decimal.disabled = false;
 
-    if (equation.addition || equation.subtraction || equation.division || equation.power) {
+    if ((equation.addition || equation.subtraction || equation.division || equation.power) && equation.second) {
         equal();
         display.textContent = equation.first;
     }
@@ -355,7 +357,7 @@ division.addEventListener('click', () => {
 
     decimal.disabled = false; 
 
-    if (equation.addition || equation.subtraction || equation.multiplication || equation.power) {
+    if ((equation.addition || equation.subtraction || equation.multiplication || equation.power) && equation.second) {
         equal();
         display.textContent = equation.first;
     }
@@ -394,7 +396,7 @@ power.addEventListener('click', () => {
 
     decimal.disabled = false;
 
-    if (equation.addition || equation.subtraction || equation.multiplication || equation.division) {
+    if ((equation.addition || equation.subtraction || equation.multiplication || equation.division) && equation.second) {
         equal();
         display.textContent = equation.first;
     }
