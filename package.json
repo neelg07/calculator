@@ -1,0 +1,22 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "Calculator web app",
+  "main": "calc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neelg07/calculator.git"
+  },
+  "keywords": [
+    "calculator"
+  ],
+  "author": "Neel Gandhi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neelg07/calculator/issues"
+  },
+  "homepage": "https://github.com/neelg07/calculator#readme"
+}
