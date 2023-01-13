@@ -1,0 +1,7 @@
+# Ignore artifacts
+*.html
+*.json
+node_modules/
+*.md
+*.css
+*ignore
