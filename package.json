@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/neelg07/calculator/issues"
   },
-  "homepage": "https://github.com/neelg07/calculator#readme"
+  "homepage": "https://github.com/neelg07/calculator#readme",
+  "devDependencies": {
+    "prettier": "^2.8.2"
+  }
 }
